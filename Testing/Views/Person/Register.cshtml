@@ -1,0 +1,350 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+<style>
+    .input-group-addon {
+        background-color: #0000FF;
+        color: #fff;
+        border-color: #3E2061;
+    }
+</style>
+<link href="~/Scripts/libs/angular/autocomplete/angucomplete-alt.css" rel="stylesheet" />
+<div class="heading">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Person Details</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" ng-app="app" ng-controller="TrainingCtrl">
+    <div data-fade="2" ng-model="tabsSeelctedList.activeTab" bs-tabs>
+        <div ng-repeat="tabsSeelcted in tabsSeelctedList" data-title="{{tabsSeelcted.title}}">
+            <div ng-if="tabsSeelcted.tabType=='UserDetails'">
+                <div class="clearfix">&nbsp;</div>
+                <div class="well lead">ADD PERSON DETAILS</div>
+                <form id="registerMainForm" name="registerMainForm" novalidate>
+                    <div id="registerForm_">
+                        <div class="row" style="background-color:#fff;">
+                            <div clas="clearfix">&nbsp;</div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">First Name</span>
+                                    <input class="form-control" type="text" ng-model="FirstName" id="FirstName" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Surname &nbsp;&nbsp;</span>
+                                    <input type="text" class="form-control" ng-model="Surname" id="Surname" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">ID Number &nbsp;</span>
+                                    <input class="form-control" id="IDNumber" ng-model="IDNumber" type="text" >
+                                </div>
+                            </div>
+                            <div class="clearfix">&nbsp;</div>
+                            <input type="text" hidden ng-model="Code" id="Code"  />
+                        </div>
+                        <div class="row" style="background-color:#fff;">
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <button type="reset"  class="btn btn-danger pull-right offset-1" ng-click="Clear();"><i class="fa fa-reply fa-fw" aria-hidden="true"></i> Clear Form</button>
+                                <button type="button"  class="btn btn-danger pull-right offset-1" ng-show="IsUpdate" ng-click="DeletePerson(Code);"><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Delete</button>
+                                <button type="button"  class="btn btn-success pull-right offset-1" ng-show="!edit" ng-click="SubmmitPerson(FirstName, Surname, IDNumber,Code)"><i class="fa fa-save fa-fw" aria-hidden="true"></i> Save</button>
+                     
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" style="background-color:#fff;">
+                    <hr />
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="col-lg-12">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <ul class="pagination">
+                                    <li><a href="#" ng-bind="'Page ' + CurrentPage + ' of ' + TotalPages"></a></li>
+                                    <li><a href="#" ng-click="FirstPage()">&laquo;</a></li>
+                                    <li><a href="#" ng-click="PrevPage( )">&lsaquo;</a></li>
+                                    <li><a href="#" ng-click="NextPage( )">&rsaquo;</a></li>
+                                    <li><a href="#" ng-click="LastPage( )">&raquo;</a></li>
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Serach By &nbsp; &nbsp; &nbsp; &nbsp; </span>
+                                    <select class="form-control" ng-model="searchBy">
+                                        <option value="">Select </option>
+                                        <option value="1">ID Number</option>
+                                        <option value="2">Surname</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               
+                                <input class="form-control" type="text" ng-model="searchinput" />
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success" ng-click="loadPersonsList(searchBy,searchinput)"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="row">
+                    <div class="col-lg-12">
+   
+                            <div class="table-responsive">
+                                <table class="table table-hover table-condensed table-bordered table-striped" style="background-color:#fff;" id="tblTrainingList">
+                                    <thead>
+                                        <tr class="bg-info">
+                                            <th>No.</th>
+                                            <th>FirstName</th>
+                                            <th>Surname</th>
+                                            <th>ID Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="person in persolList" ng-click="LoadData(person)">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{person.name}}</td>
+                                            <td>{{person.surname}}</td>
+                                            <td>{{person.id_number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div ng-if="tabsSeelcted.tabType=='AccountDetails'">
+                <div class="clearfix">&nbsp;</div>
+                <div class="well lead">ADD PERSON ACCOUNT DETAILS</div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <span class="input-group-addon">Serach By &nbsp; &nbsp; &nbsp; &nbsp; </span>
+                            <select class="form-control" ng-model="accountsearchBy">
+                                <option value="">Select </option>
+                                <option value="1">ID Number</option>
+                                <option value="2">Account</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-control" type="text" ng-model="accountsearchinput" />
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-success" ng-click="loadAccountsList(accountsearchBy,accountsearchinput)"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                    </div>
+                </div>
+
+                <form id="accountMainForm" name="accountMainForm" novalidate>
+                    <div>
+                        <div class="row" style="background-color:#fff;">
+                            <div clas="clearfix">&nbsp;</div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">First Name</span>
+                                    <input class="form-control" type="text" ng-model="AccFirstName" id="FirstName" disabled>
+                                </div>
+                                <div class="clearfix">&nbsp;</div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Enter Account Number</span>
+                                    <input class="form-control" type="text" ng-model="AccountNumber" id="AccountNumber"  />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Surname &nbsp;&nbsp;</span>
+                                    <input type="text" class="form-control" ng-model="AccSurname" id="Surname" disabled />
+                                </div>
+                                <div class="clearfix">&nbsp;</div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Enter Account Balance</span>
+                                    <input class="form-control" type="number" ng-model="Balance" id="Balance" ng-disabled="isValidPerson" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">ID Number &nbsp;</span>
+                                    <input class="form-control" id="IDNumber" ng-model="AccIDNumber" type="text" disabled />
+                                </div>
+                            </div>
+                            <div class="clearfix">&nbsp;</div>
+                            <input class="form-control" ng-model="PersonCode" type="hidden" />
+                            <input class="form-control" ng-model="PersonAccountCode" type="hidden" />
+                        </div>
+                        <div class="row" style="background-color:#fff;">
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <button type="reset" class="btn btn-danger pull-right offset-1" ng-click="Clear();"><i class="fa fa-reply fa-fw" aria-hidden="true"></i> Clear Form</button>
+                                <button type="button" class="btn btn-success pull-right offset-1" ng-show="!edit" ng-click="SubmmitAccount(AccountNumber, Balance, PersonCode,accountsearchBy,accountsearchinput,PersonAccountCode)"><i class="fa fa-save fa-fw" aria-hidden="true"></i> SAVE</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    
+                    <div class="col-lg-12">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <ul class="pagination">
+                                    <li><a href="#" ng-bind="'Page ' + AccCurrentPage + ' of ' + AccTotalPages"></a></li>
+                                    <li><a href="#" ng-click="AccFirstPage()">&laquo;</a></li>
+                                    <li><a href="#" ng-click="AccPrevPage( )">&lsaquo;</a></li>
+                                    <li><a href="#" ng-click="AccNextPage( )">&rsaquo;</a></li>
+                                    <li><a href="#" ng-click="AccLastPage( )">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed table-bordered table-striped" style="background-color:#fff;" id="tblTrainingList">
+                                <thead>
+                                    <tr class="bg-info">
+                                        <th>No.</th>
+                                        <th>Account Number</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="account in accountsList" ng-click="LoadAccountData(account)">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{account.account_number}}</td>
+                                        <td>R{{account.outstanding_balance | currency : ''}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="tabsSeelcted.tabType=='TransactionDetails'">
+                <div class="clearfix">&nbsp;</div>
+                <div class="well lead">ADD ACCOUNT TRANSACTION</div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">Serach By Account Number &nbsp; &nbsp; &nbsp; &nbsp; </span>
+                            <input class="form-control" type="text" ng-model="transactionsearchinput" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-success" ng-click="LoadAccountsTransactionList(transactionsearchinput)"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                    </div>
+                </div>
+                <form>
+
+                    <div class="row" style="background-color:#fff;">
+                        <div clas="clearfix">&nbsp;</div>
+                        <div class="col-lg-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">First Name</span>
+                                <input class="form-control" type="text" ng-model="TransactionFirstName" id="TransactionFirstName" disabled>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">Surname &nbsp;&nbsp;</span>
+                                <input type="text" class="form-control" ng-model="TransactionSurname" id="TransactionSurname" disabled />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">ID Number &nbsp;</span>
+                                <input class="form-control" id="TransactionIDNumber" ng-model="TransactionIDNumber" type="text" disabled />
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">Account Number &nbsp;</span>
+                                <input class="form-control" id="TransactionAccountNumber" ng-model="TransactionAccountNumber" type="text" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" ng-model="AccountCode" type="hidden" />
+                    <input class="form-control" ng-model="TransactionCode" type="hidden" />
+                </form>
+
+                <form id="transactionMainForm" name="transactionMainForm" novalidate>
+                    <div>
+                        <div class="row" style="background-color:#fff;">
+                            <div clas="clearfix">&nbsp;</div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Outsatnding Balance</span>
+                                    <input class="form-control" type="text" ng-model="OutsatndingBalance" id="OutsatndingBalance" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Transaction  Date</span>
+                                    <input class="form-control" type="text" ng-model="TransactionDate" id="TransactionDate" date-picker ng-disabled="isEdit"  />
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Amount &nbsp;&nbsp;</span>
+                                    <input type="number" class="form-control" ng-model="Amount" id="Amount" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Description &nbsp;</span>
+                                    <input class="form-control" id="Description" ng-model="Description" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="background-color:#fff;">
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="col-lg-12">
+                                <button type="reset" class="btn btn-danger pull-right offset-1" ng-click="Clear();"><i class="fa fa-reply fa-fw" aria-hidden="true"></i> Clear Form</button>
+                                <button type="button" class="btn btn-success pull-right offset-1" ng-show="!edit" ng-click="SubmmitTransaction(TransactionDate, Amount, Description,AccountCode,transactionsearchinput)"><i class="fa fa-save fa-fw" aria-hidden="true"></i> SAVE</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+ 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed table-bordered table-striped"  >
+                                <thead>
+                                    <tr class="bg-info">
+                                        <th>No.</th>
+                                        <th>Transaction Date</th>
+                                        <th>Capture Date</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="transaction in transactionList" ng-click="LoadTransactionData(transaction)">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{transaction.transaction_date}}</td>
+                                        <td>{{transaction.capture_date}}</td>
+                                        <td>R{{transaction.amount | currency :'' }}</td>
+                                        <td>{{transaction.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>
+<script src="~/Scripts/JsControllers/Person.js"></script>

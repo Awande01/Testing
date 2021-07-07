@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="App">
+<head>
+    <title>TestDemo &#45; @ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cleartype" content="on" />
+    <meta name="MobileOptimized" content="width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileColor" content="#0000FF">
+    <meta name="theme-color" content="#0000FF">
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+    <script src="~/Scripts/libs/jquery/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/libs/jquery/Jquery.ui.min1.9.js"></script>
+    <script src="~/Scripts/libs/bootstrap/bootstrap.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/libs/angular/angular.js"></script>
+    <script src="~/Scripts/libs/angular/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+    <script src="~/Scripts/libs/angular-dragdrop.js"></script>
+    <script src="~/Scripts/libs/bootstrap/ui-bootsrap-tpls.js"></script>
+    <script src="~/Scripts/libs/angular/angular-touch.min.js"></script>
+    <script src="~/Scripts/libs/underscore-min.js"></script>
+    <script src="~/Scripts/libs/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/libs/angular/angular-animate.min.js"></script>
+    <script src="~/Scripts/libs/toaster.js"></script>
+    <script src="~/Scripts/libs/angular/autocomplete/angucomplete-alt.js"></script>
+    <script src="~/Scripts/libs/bootstrap/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/libs/ngAutocomplete.js"></script>
+    <script src="~/Scripts/app/directives.js"></script>
+    <link href="~/Scripts/libs/jquery/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/toaster.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <link href="~/Content/autocomplete.css" rel="stylesheet" />
+    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+    <script src="~/Scripts/libs/bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+</head>
+<body>
+    @*<div id="progressIndicator" style="display: none;">
+        <div><i class="fa fa-refresh fa-spin fa-5x"></i><br /><h4>Processing...</h4></div>
+    </div>*@
+    <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
+    <header role="banner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Home", "Home", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Persons", "Register", "Person")</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+    </header>
+    @*@*body content, everything on the site goes here*@
+    <main role="main">
+        @RenderBody()
+    </main>
+    <script>
+        //smooth scroll to top
+        $back_to_top.on('click', function (event) {
+            event.preventDefault();
+            $('body,html').animate({
+                scrollTop: 0,
+            }, scroll_top_duration
+            );
+        });
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

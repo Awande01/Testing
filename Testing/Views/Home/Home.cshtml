@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <a href="@Url.Content("~/Home/About")">
+                <div class="pink-bg blocks">
+                    <i class="style fa fa-comment" aria-hidden="true"></i>
+                    <h1>About</h1>
+                    <a class="bott" href="@Url.Content("~/Home/About")">View Details <i class="fa fa-arrow-circle-right pull-right" aria-hidden="true"></i></a>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a href="@Url.Content("~/Home/Contact")">
+                <div class="green-bg blocks">
+                    <i class="style fa fa-users" aria-hidden="true"></i>
+                    <h1>Contact</h1>
+                    <a class="bott" href="@Url.Content("~/Home/Contact")">View Details <i class="fa fa-arrow-circle-right pull-right" aria-hidden="true"></i></a>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a href="@Url.Content("~/Person/Register")">
+                <div class="red-bg blocks">
+                    <i class="style fa fa-book" aria-hidden="true"></i>
+                    <h1>Persons</h1>
+                    <a class="bott" href="@Url.Content("~/Person/Register")">View Details <i class="fa fa-arrow-circle-right pull-right" aria-hidden="true"></i></a>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="row">
+        <h1><span style="align-content:center">Manange System</span> </h1>
+        <br/>
+        <div class="card card-body">
+            <p>The system is about managing peoples acounts. </p>
+            <p>A person can have more than one account. </p>
+            <p>Using the system you will be able to tract all the transaction mande to each account.</p>
+            <p>Account is linked to one person.</p>
+        </div>
+    </div>
+   
+</div>

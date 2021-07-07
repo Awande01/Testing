@@ -12,6 +12,7 @@ namespace Testing.Controllers
             return View();
         }
 
+
         [ChildActionOnly]
         public ActionResult _Menu()
         {
